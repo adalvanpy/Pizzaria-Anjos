@@ -1,10 +1,10 @@
 <?php
 session_start();
 include("../conexao/conexao.php");
-include("models/Consultas.php");
+include("../models/Consultas.php");
+$id = isset($_GET['id']) ? $_GET['id'] : 0;
 $model = new Consultas($conexao);
-
-    $usuario = $model->getUsuarioTipo('comum');
+$usuario = $model->getUsuario($id);
 
 ?>
 <!DOCTYPE html>
@@ -21,7 +21,7 @@ $model = new Consultas($conexao);
 </div>
 <div>
     <a href="fazer_pedido.php">Fazer pedido</a>
-    <a>Meus Pedidos</a>
+    <a href="meus_pedidos.php?id=<?=$usuario['id']?>">Meus Pedidos</a>
     <a href="logout.php">Sair</a>
 </div>
 </header>

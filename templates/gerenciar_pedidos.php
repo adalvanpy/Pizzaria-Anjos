@@ -2,14 +2,12 @@
 session_start();
 include("../conexao/conexao.php");
 include("../models/Consultas.php");
-
 $id = isset($_GET['id']) ? $_GET['id'] : 0;
 
 $consulta = new Consultas($conexao);
-$cliente = $consulta->getCliente($id);
 $usuario = $consulta->getUsuario($id);
-$pedido = $consulta->getPedidoId($cliente['id']);
-
+$func = $consulta->getFuncionarioId($id);
+$pedido = $consulta->getPedidosForGerencia($func['id']);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -43,17 +41,16 @@ $pedido = $consulta->getPedidoId($cliente['id']);
         </thead>
         <tbody>
         <?php foreach ($pedido as $ped):?>
-        <tr class="hover:bg-gray-50">
-            <td class="border px-4 py-2"><?=$ped['id']?></td>
-            <td class="border px-4 py-2"><?=$ped['status']?></td>
-            <td class="border px-4 py-2"><?=$ped['tipo_entrega']?></td>
-            <td class="border px-4 py-2"><?=$ped['frete']?></td>
-            <td class="border px-4 py-2"><?=$ped['total']?></td>
-            <td class="border px-4 py-2  max-w-[50px]">
-                <a class="underline text-blue-500">Cancelar</a>
-                <a class="underline text-blue-500  ml-2">Excluir</a>
-            </td>
-        </tr>
+            <tr class="hover:bg-gray-50">
+                <td class="border px-4 py-2"><?=$ped['id']?></td>
+                <td class="border px-4 py-2"><?=$ped['status']?></td>
+                <td class="border px-4 py-2"><?=$ped['tipo_entrega']?></td>
+                <td class="border px-4 py-2"><?=$ped['frete']?></td>
+                <td class="border px-4 py-2"><?=$ped['total']?></td>
+                <td class="border px-4 py-2  max-w-[50px]">
+                    <a class="underline text-blue-500">Atualizar Status</a>
+                </td>
+            </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
@@ -64,4 +61,3 @@ $pedido = $consulta->getPedidoId($cliente['id']);
 </footer>
 </body>
 </html>
-

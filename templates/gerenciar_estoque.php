@@ -2,8 +2,9 @@
 session_start();
 include "../conexao/conexao.php";
 include("../models/Consultas.php");
+$id = isset($_GET['id']) ? $_GET['id'] : 0;
 $model = new Consultas($conexao);
-    $usuario = $model->getUsuarioTipo('admin');
+    $usuario = $model->getUsuario($id);
     $pizza = $model->getPizza();
     $bebida = $model->getBebidass();
 ?>
@@ -20,7 +21,7 @@ $model = new Consultas($conexao);
         <span>Bem vindo <?=$usuario['nome']?></span>
     </div>
     <div>
-        <a>Gerenciar Pedidos</a>
+        <a href="gerenciar_pedidos.php?id=<?=$usuario['id']?>">Gerenciar Pedidos</a>
         <a href="logout.php">Sair</a>
     </div>
 </header>

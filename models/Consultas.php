@@ -7,10 +7,10 @@ class Consultas {
         $this->conexao = $conexao;
     }
 
-public function getUsuarioTipo($tipo){
-     $sql = "SELECT id, nome FROM usuario WHERE tipo = ?";
+public function getUsuario($id){
+     $sql = "SELECT * FROM usuario WHERE id = ?";
      $stmt = $this->conexao->prepare($sql);
-     $stmt->bind_param("s", $tipo);
+     $stmt->bind_param("i", $id);
      $stmt->execute();
      return $stmt->get_result()->fetch_assoc();
 }
@@ -63,6 +63,21 @@ public function getBebidaId($id){
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
 }
+    public function getPedidoId($id){
+        $sql = "SELECT * FROM pedido WHERE cliente_id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getPedidosForGerencia($id){
+        $sql = "SELECT * FROM pedido WHERE funcionario_id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
 
 }
 ?>
