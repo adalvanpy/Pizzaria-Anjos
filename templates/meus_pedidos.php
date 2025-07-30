@@ -21,7 +21,7 @@ $pedido = $consulta->getPedidoId($cliente['id']);
 <body class="bg-[#f9f5ed] min-h-screen flex flex-col items-center">
 <header class="w-full bg-[#b22222] text-white p-4 flex items-center justify-between">
     <div class="ml-8">
-        <span>Bem vindo <?=$usuario['nome']?></span>
+        <span>Bem vindo(a) <?=$usuario['nome']?></span>
     </div>
     <div class="flex gap-4 mr-8">
         <a href="dashboard.php?id=<?=$usuario['id']?>">Dashboard</a>

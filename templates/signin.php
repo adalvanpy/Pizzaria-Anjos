@@ -46,7 +46,7 @@ $conexao->close();
 </head>
 <body class="bg-[#f9f5ed] min-h-screen flex flex-col items-center">
 <header class="w-full bg-[#b22222] text-white p-4 flex items-center justify-start">
-    <a class="text-2xl underline" href="index.php">Inicio</a>
+    <a class="text-2xl underline" href="../index.php">Inicio</a>
 </header>
 <main class="w-full flex-grow p-8">
     <div class="flex flex-col items-center justify-center w-full h-full">

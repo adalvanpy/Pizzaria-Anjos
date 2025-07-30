@@ -52,9 +52,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="bg-white shadow p-4 rounded text-sm flex flex-col">
                             <p class="font-semibold mb-2 text-base"><?= $item['nome'] ?></p>
                             <img src="../fotos/<?= $item['foto'] ?>" alt="<?= $item['nome'] ?>" class="w-full h-44 object-cover mb-2 rounded">
-                            <p>Tamanho: <?= $item['tamanho'] ?></p>
-                            <p class="text-sm font-bold">R$ <?= $item['preco'] ?></p>
-                            <p class="text-sm"><?= $item['borda'] ?></p>
+                            <p><strong>Tamanho: </strong> <?= $item['tamanho'] ?></p>
+                            <p class="text-sm"><strong>R$ </strong> <?= $item['preco'] ?></p>
+                            <p class="text-sm"><strong>Borda: </strong><?= $item['borda'] ?></p>
                             <div class="flex items-center justify-between w-full h-full">
                                 <input type="checkbox" class="scale-[2.5] mt-4 ml-2" name="itens[]" value="<?= $item['id'] ?>">
                                 <input  class="p-2 mt-4 w-[20%] h-8 border border-black rounded" type="number" name="quantidade[<?= $item['id'] ?>]" value="1">
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <p class="font-semibold mb-2 text-base"><?= $item['nome'] ?></p>
                             <img src="../fotos/<?= $item['foto'] ?>" alt="<?= $item['nome'] ?>" class="w-full h-44 object-cover mb-2 rounded">
                             <p><?= $item['ml'] ?></p>
-                            <p class="text-sm font-bold">R$ <?= $item['preco'] ?></p>
+                            <p class="text-sm"><strong>R$ </strong><?= $item['preco'] ?></p>
                             <div class="flex items-center justify-between w-full h-full">
                                 <input class="scale-[2.5] mt-4 ml-2" type="checkbox" name="itens[]" value="<?= $item['id'] ?>">
                                 <input type="number" name="quantidade[<?= $item['id'] ?>]" class="p-2 mt-4 w-[20%] h-8 border border-black rounded" value="1">
@@ -88,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="flex flex-col items-center w-full">
             <textarea class="w-[50%] h-20 p-2 border rounded mt-4" name="observacao" placeholder="Alguma observação?"></textarea>
             <button class="w-[50%] border rounded bg-blue-500 mt-4 text-white p-2" type="submit">Adicionar</button>
+            <a href>Cancelar Pedido</a>
         </div>
 
     </form>

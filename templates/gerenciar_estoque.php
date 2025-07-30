@@ -35,10 +35,11 @@ $itens = $model->getItens();
                     <h2 class="font-semibold mb-2 text-base"><?=$row['nome']?></h2>
                     <p class="text-green-500 font-semibold text-sm"><?=$row['estoque']?></p>
                     <img src="../fotos/<?=$row['foto']?>" alt="<?=$row['nome']?>" class="w-full h-44 object-cover mb-2 rounded">
-                    <p><span class="text-sm font-bold">Preço R$</span><?=$row['preco']?></p>
-                    <p class="text-sm">Borda:<?=$row['borda']?></p>
-                    <p class="mt-1 mb-2 text-xs">Ingredientes: <?=$row['ingredientes']?></p>
-                    <a href="editar_pizza.php?id=<?=$row['id']?>" class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded shadow self-start">ATUALIZAR</a>
+                    <p><strong>Preço R$ </strong><?=$row['preco']?></p>
+                    <p class="text-sm"><strong>Borda: </strong><?=$row['borda']?></p>
+                    <p class="text-sm"><strong>Tamanho: </strong><?=$row['tamanho']?></p>
+                    <p class="mt-1 mb-2 text-sm"><strong>Ingredientes: </strong> <?=$row['ingredientes']?></p>
+                    <a href="editar_item.php?id=<?=$row['id']?>&user_id=<?=$usuario['id']?>" class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded shadow self-start">ATUALIZAR</a>
                 </div>
             <?php endif; ?>
         <?php endforeach; ?>
@@ -51,9 +52,9 @@ $itens = $model->getItens();
               <h2 class="font-semibold mb-2 text-base"><?=$beb['nome']?></h2>
               <p class="text-green-500 font-semibold text-sm"><?=$beb['estoque']?></p>
               <img src="../fotos/<?=$beb['foto']?>" alt="<?=$beb['nome']?>" class="w-full h-44 object-cover mb-2 rounded">
-              <p><span class="text-sm font-bold">Preço R$</span><?=$beb['preco']?></p>
+              <p><strong>Preço R$ </strong><?=$beb['preco']?></p>
               <p><?=$beb['ml']?></p>
-              <a href="editar_bebida.php?id=<?=$beb['id']?>" class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded shadow self-start">ATUALIZAR</a>
+              <a href="editar_item.php?id=<?=$beb['id']?>&user_id=<?=$usuario['id']?>" class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded shadow self-start">ATUALIZAR</a>
           </div>
         <?php endif;?>
         <?php endforeach;?>

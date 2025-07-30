@@ -107,6 +107,15 @@ public function getUsuario($id){
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getItemId($id){
+        $sql = "SELECT * FROM itens WHERE id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+
+    }
+
 
 }
 ?>
