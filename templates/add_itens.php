@@ -1,57 +1,36 @@
 <?php
 session_start();
-include ("../conexao/conexao.php");
+include("../conexao/conexao.php");
+include("../models/Cadastro.php");
 include("../models/Consultas.php");
-$pedido_id = isset($_GET['pedido_id'])?(int)$_GET['pedido_id'] : 0;
-$model = new Consultas($conexao);
+include("../models/Editar.php");
+$id = $_GET['id_pedido'] ?? 0;
+$userId = $_GET['user_id'] ?? 0;
+$busca = new Consultas($conexao);
+$add = new Cadastro($conexao);
+$total = new Editar($conexao);
+$itens = $busca->getItens();
+$nome = $busca->getUsuario($userId);
 
-$pizzas = $model->getPizza();
-$bebidas = $model->getBebidass();
+$subtotal = 0.00;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $itens_selecionados = $_POST['itens'] ?? [];
+    $quantidade = $_POST['quantidade'] ?? [];
+    $precos = $_POST['preco'] ?? [];
+    $observacao = $_POST['observacao'] ?? '';
 
+    foreach ($itens_selecionados as $item_id) {
+        $qtd = (int)($quantidade[$item_id] ?? 1);
+        $preco = (float)($precos[$item_id] ?? 0);
+        $subtotal += $preco * $qtd;
 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $pizzas      = $_POST['pizzas'] ?? [];
-    $bebidas     = $_POST['bebidas'] ?? [];
-    $quantidadep = $_POST['quantidadep'] ?? [];
-    $quantidadeb = $_POST['quantidadeb'] ?? [];
-    $observacao  = $_POST['observacao'] ?? '';
-    $precop      = $_POST['precop'] ?? [];
-    $precob      = $_POST['precob'] ?? [];
-
-    $subtotal = 0.00;
-
-    foreach ($pizzas as $pzz) {
-        $qtd = isset($quantidadep[$pzz]) ? (int)$quantidadep[$pzz] : 0;
-        if ($qtd <= 0) continue;
-        $prc = isset($precop[$pzz]) ? (float)$precop[$pzz] : 0.0;
-
-        $sql_add = "INSERT INTO itens_pedido(id_pedido, id_pizza, id_bebida, quantidade, observacao, subtotal) VALUES (?,?,?,?,?,?)";
-        $stmt = mysqli_prepare($conexao, $sql_add);
-        $id_bebida = NULL;
-        $subtotal += $prc * $qtd;
-        $stmt->bind_param("iiiisd", $pedido_id, $pzz, $id_bebida, $qtd, $observacao, $subtotal);
-        $stmt->execute();
+        $add->criarItemPedido($id, $item_id, $qtd, $observacao, $preco * $qtd);
     }
-
-    foreach ($bebidas as $beb) {
-        $qtd = isset($quantidadeb[$beb]) ? (int)$quantidadeb[$beb] : 0;
-        if ($qtd <= 0) continue;
-        $prc = isset($precob[$beb]) ? (float)$precob[$beb] : 0.0;
-
-        $sql_add = "INSERT INTO itens_pedido(id_pedido, id_pizza, id_bebida, quantidade, observacao, subtotal) VALUES (?,?,?,?,?,?)";
-        $stmt = mysqli_prepare($conexao, $sql_add);
-        $id_pizza = NULL;
-        $subtotal = $prc * $qtd;
-        $stmt->bind_param("iiiisd", $pedido_id, $id_pizza, $beb, $qtd, $observacao, $subtotal);
-        $stmt->execute();
-    }
-    $sql_p = "UPDATE pedido SET total = total + $subtotal WHERE id = $pedido_id";
-    mysqli_query($conexao, $sql_p);
-    header("Location: pagamento.php?pedido_id=$pedido_id");
+    $total->atualizarTotal($id, $subtotal);
+    header("Location: ../templates/pagamento.php?id_pedido=$id&user_id=$userId");
     exit();
-
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -59,65 +38,65 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Adcionar itens</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="w-full min-h-screen bg-[#f9f5ed] flex flex-col items-center justify-between">
-<header class=" p-4 flex items-center justify-between w-full h-[50%] bg-white/50 text-black ">
-    <a>Meus Pedidos</a>
-    <a>Sair</a>
+<body class="bg-[#f9f5ed] min-h-screen flex flex-col items-center">
+<header class="w-full bg-[#b22222] text-white p-4 flex gap-4 items-center justify-start">
+    <span class="ml-8">Seja bem vindo(a) <?=$nome['nome']?></span>
 </header>
-<main class="flex w-[90%] border flex-col justify-center items-center bg-[#f9f5ed]">
-    <form method="post" action="add_itens.php?pedido_id=<?=$pedido_id?>" class="w-full border">
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full p-6">
-            <?php foreach($pizzas as $pizza): ?>
-                <div class="bg-white shadow p-4 rounded text-sm flex flex-col">
-                    <p class="font-semibold mb-2 text-base"><?=$pizza['nome']?></p>
-                    <img src="../fotos/<?=$pizza['foto']?>" alt="<?=$pizza['nome']?>" class="w-full h-44 object-cover mb-2 rounded">
-                    <p>Tamanho: <?=$pizza['tamanho']?></p>
-                    <p class="text-sm font-bold">R$ <?=$pizza['preco']?></p>
-                    <p class="text-sm"><?=$pizza['borda']?></p>
-                    <div class="flex items-center justify-between w-full h-full">
-                        <input onchange="mostrarInputP(this)" type="checkbox" class="scale-[2.5] mt-4 ml-2"  name="pizzas[]" value="<?= $pizza['id'] ?>">
-                        <input id="inputp<?=$pizza['id']?>" class=" p-2 mt-4 w-[20%] h-8 border border-black  hidden rounded" type="number" name="quantidadep[<?= $pizza['id'] ?>]" value="1">
-                        <input type="hidden" name="precop[<?= $pizza['id'] ?>]" value="<?= $pizza['preco'] ?>">
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full p-6">
-        <?php foreach($bebidas as $bebida): ?>
-            <div class="bg-white shadow p-4 rounded text-sm flex flex-col">
-                <p class="font-semibold mb-2 text-base"><?=$bebida['nome']?></p>
-                <img src="../fotos/<?=$bebida['foto']?>" alt="<?=$bebida['nome']?>" class="w-full h-44 object-cover mb-2 rounded">
-                <p><?=$bebida['ml']?></p>
-                <p class="text-sm font-bold">R$ <?=$bebida['preco']?></p>
-                <div class="flex items-center justify-between w-full h-full">
-                   <input onchange="mostrarInputB(this)" class="scale-[2.5] mt-4 ml-2" type="checkbox" name="bebidas[]" value="<?= $bebida['id'] ?>">
-                   <input id="inputb<?=$bebida['id']?>" type="number" name="quantidadeb[<?= $bebida['id'] ?>]" class=" p-2 mt-4 w-[20%] h-8 border border-black  hidden rounded"  value="1">
-                   <input type="hidden" name="precob[<?= $bebida['id'] ?>]" value="<?= $bebida['preco'] ?>">
-                </div>
+<main class="w-full flex-grow p-8">
+    <form method="post" action="add_itens.php?id_pedido=<?= $id ?>&user_id=<?=$userId?>" class="w-full">
+        <div class="p-6">
+            <h2 class="text-xl font-bold mb-2">Pizzas</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <?php foreach($itens as $item): ?>
+                    <?php if($item['tipo'] == 'Pizza'): ?>
+                        <div class="bg-white shadow p-4 rounded text-sm flex flex-col">
+                            <p class="font-semibold mb-2 text-base"><?= $item['nome'] ?></p>
+                            <img src="../fotos/<?= $item['foto'] ?>" alt="<?= $item['nome'] ?>" class="w-full h-44 object-cover mb-2 rounded">
+                            <p>Tamanho: <?= $item['tamanho'] ?></p>
+                            <p class="text-sm font-bold">R$ <?= $item['preco'] ?></p>
+                            <p class="text-sm"><?= $item['borda'] ?></p>
+                            <div class="flex items-center justify-between w-full h-full">
+                                <input type="checkbox" class="scale-[2.5] mt-4 ml-2" name="itens[]" value="<?= $item['id'] ?>">
+                                <input  class="p-2 mt-4 w-[20%] h-8 border border-black rounded" type="number" name="quantidade[<?= $item['id'] ?>]" value="1">
+                                <input type="hidden" name="preco[<?= $item['id'] ?>]" value="<?= $item['preco'] ?>">
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </div>
-        <?php endforeach; ?>
+
+            <h2 class="text-xl font-bold my-4">Bebidas</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <?php foreach($itens as $item): ?>
+                    <?php if($item['tipo'] == 'Bebida'): ?>
+                        <div class="bg-white shadow p-4 rounded text-sm flex flex-col">
+                            <p class="font-semibold mb-2 text-base"><?= $item['nome'] ?></p>
+                            <img src="../fotos/<?= $item['foto'] ?>" alt="<?= $item['nome'] ?>" class="w-full h-44 object-cover mb-2 rounded">
+                            <p><?= $item['ml'] ?></p>
+                            <p class="text-sm font-bold">R$ <?= $item['preco'] ?></p>
+                            <div class="flex items-center justify-between w-full h-full">
+                                <input class="scale-[2.5] mt-4 ml-2" type="checkbox" name="itens[]" value="<?= $item['id'] ?>">
+                                <input type="number" name="quantidade[<?= $item['id'] ?>]" class="p-2 mt-4 w-[20%] h-8 border border-black rounded" value="1">
+                                <input type="hidden" name="preco[<?= $item['id'] ?>]" value="<?= $item['preco'] ?>">
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
         </div>
+
         <div class="flex flex-col items-center w-full">
             <textarea class="w-[50%] h-20 p-2 border rounded mt-4" name="observacao" placeholder="Alguma observação?"></textarea>
             <button class="w-[50%] border rounded bg-blue-500 mt-4 text-white p-2" type="submit">Adicionar</button>
         </div>
+
     </form>
 </main>
-<footer>
 
+<footer class="w-full bg-[#556b2f] text-white text-center p-8">
+    <p>&copy; 2025 Pizzaria Anjos. Todos os direitos reservados.</p>
 </footer>
 <script>
-    function mostrarInputP(checkbox) {
-        const input = document.getElementById('inputp' + checkbox.value);
-        input.classList.toggle('hidden', !checkbox.checked);
-        input.classList.toggle('block', checkbox.checked);
-    }
-    function mostrarInputB(checkbox) {
-        const input = document.getElementById('inputb' + checkbox.value);
-        input.classList.toggle('hidden', !checkbox.checked);
-        input.classList.toggle('block', checkbox.checked);
-    }
-
 </script>
 </body>
 </html>

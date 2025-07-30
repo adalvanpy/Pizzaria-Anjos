@@ -31,12 +31,6 @@ public function getUsuario($id){
      return $stmt->get_result()->fetch_assoc();
 
  }
- public function getPizza(){
-     return $this->conexao->query("SELECT * FROM pizza")->fetch_all(MYSQLI_ASSOC);
- }
- public function getBebidass(){
-     return $this->conexao->query("SELECT * FROM bebida")->fetch_all(MYSQLI_ASSOC);
- }
 
  public function getPedido($pedido_id){
         $sql = "SELECT * FROM pedido WHERE id = ?";
@@ -46,23 +40,6 @@ public function getUsuario($id){
         return $stmt->get_result()->fetch_assoc();
  }
 
- public function getPizzaId($id)
-{
-    $sql = "SELECT * FROM pizza WHERE id = ?";
-    $stmt = $this->conexao->prepare($sql);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    return $stmt->get_result()->fetch_assoc();
-
-}
-
-public function getBebidaId($id){
-        $sql = "SELECT * FROM bebida WHERE id = ?";
-        $stmt = $this->conexao->prepare($sql);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
-}
     public function getPedidoId($id){
         $sql = "SELECT * FROM pedido WHERE cliente_id = ?";
         $stmt = $this->conexao->prepare($sql);
@@ -78,6 +55,58 @@ public function getBebidaId($id){
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+    public function getPagamentos($id){
+        $sql = "SELECT * FROM pagamento WHERE funcionario_id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    }
+    public function getPagamentoId($id){
+        $sql = "SELECT id, status_pagamento FROM pagamento WHERE id = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+    function getAdmin($tipo){
+        $sql = "SELECT id FROM usuario WHERE tipo = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param("s", $tipo);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+
+    }
+
+    public function getItens()
+    {
+        $sql = "SELECT * FROM itens";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getItem_pedido($id)
+    {
+        $sql = "SELECT item_pedido.*, itens.nome, itens.preco, itens.tamanho, itens.borda, itens.ml
+            FROM item_pedido
+            JOIN itens ON item_pedido.id_item = itens.id
+            WHERE item_pedido.id_pedido = ?";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getEmails(){
+        $sql = "SELECT email FROM usuario";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
 
 }
 ?>

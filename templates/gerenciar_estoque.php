@@ -4,9 +4,8 @@ include "../conexao/conexao.php";
 include("../models/Consultas.php");
 $id = isset($_GET['id']) ? $_GET['id'] : 0;
 $model = new Consultas($conexao);
-    $usuario = $model->getUsuario($id);
-    $pizza = $model->getPizza();
-    $bebida = $model->getBebidass();
+$usuario = $model->getUsuario($id);
+$itens = $model->getItens();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -15,40 +14,41 @@ $model = new Consultas($conexao);
     <title>Gerenciar estoque</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="w-full h-full bg-[#f9f5ed] flex flex-col items-center justify-center">
-<header class=" mt-4 p-4 flex items-center justify-between w-[90%] h-[50%] bg-white/50 shadow shadow-orange-300 text-black ">
+<body class="bg-[#f9f5ed] w-full min-h-screen flex flex-col items-center justify-between">
+<header class=" p-4 flex items-center justify-between w-full h-[50%] bg-[#b22222] text-white ">
     <div>
-        <span>Bem vindo <?=$usuario['nome']?></span>
+        <span class="text-2xl" >Bem vindo <?=$usuario['nome']?></span>
     </div>
-    <div>
-        <a href="gerenciar_pedidos.php?id=<?=$usuario['id']?>">Gerenciar Pedidos</a>
-        <a href="logout.php">Sair</a>
+    <div class="flex gap-4">
+        <a class="text-2xl underline" href="cadastrar_item.php?id=<?=$usuario['id']?>">Cadastrar item</a>
+        <a class="text-2xl underline" href="gerenciar_pedidos.php?id=<?=$usuario['id']?>">Gerenciar Pedidos</a>
+        <a class="text-2xl underline" href="gerenciar_caixa.php?id=<?=$usuario['id']?>">Gerenciar Caixa</a>
+        <a class="text-2xl underline" href="logout.php">Sair</a>
     </div>
 </header>
-<main class="flex w-[90%] border flex-col justify-center items-center bg-[#f9f5ed]">
- <h2 class="text-2xl m-4">Pizzas tamanho Pequena</h2>
+<main class="flex w-[90%] flex-col justify-center items-center bg-[#f9f5ed]">
+ <h2 class="text-2xl m-4 text-[#556b2f] font-bold">Pizzas</h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full p-6">
-        <?php foreach($pizza as $row): ?>
-            <?php if($row['tamanho'] === 'Pequena'): ?>
+        <?php foreach($itens as $row): ?>
+            <?php if($row['tipo'] === 'Pizza'): ?>
                 <div class="bg-white shadow p-3 rounded text-sm flex flex-col">
                     <h2 class="font-semibold mb-2 text-base"><?=$row['nome']?></h2>
                     <p class="text-green-500 font-semibold text-sm"><?=$row['estoque']?></p>
                     <img src="../fotos/<?=$row['foto']?>" alt="<?=$row['nome']?>" class="w-full h-44 object-cover mb-2 rounded">
                     <p><span class="text-sm font-bold">Preço R$</span><?=$row['preco']?></p>
                     <p class="text-sm">Borda:<?=$row['borda']?></p>
-                    <p class="mt-1 mb-2 text-xs">Ingredientes: <?=$row['igredientes']?></p>
+                    <p class="mt-1 mb-2 text-xs">Ingredientes: <?=$row['ingredientes']?></p>
                     <a href="editar_pizza.php?id=<?=$row['id']?>" class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded shadow self-start">ATUALIZAR</a>
                 </div>
             <?php endif; ?>
         <?php endforeach; ?>
     </div>
-    <h2>Bebidas</h2>
-    <p>Sucos</p>
+    <h2 class="text-2xl text-[#556b2f] m-4 font-bold">Bebidas</h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full p-6">
-        <?php foreach($bebida as $beb): ?>
-        <?php if($beb['tipo'] === 'Suco'): ?>
+        <?php foreach($itens as $beb): ?>
+        <?php if($beb['tipo'] === 'Bebida'): ?>
           <div class="bg-white shadow p-3 rounded text-sm flex flex-col">
-              <h2><?=$beb['nome']?></h2>
+              <h2 class="font-semibold mb-2 text-base"><?=$beb['nome']?></h2>
               <p class="text-green-500 font-semibold text-sm"><?=$beb['estoque']?></p>
               <img src="../fotos/<?=$beb['foto']?>" alt="<?=$beb['nome']?>" class="w-full h-44 object-cover mb-2 rounded">
               <p><span class="text-sm font-bold">Preço R$</span><?=$beb['preco']?></p>
@@ -59,7 +59,7 @@ $model = new Consultas($conexao);
         <?php endforeach;?>
     </div>
 </main>
-<footer class="bg-white/50 text-black text-center p-4 w-[90%] h-[50%] shadow shadow-orange-300 mt-60">
+<footer class="bg-[#556b2f] text-white text-center p-4 w-full py-8 mt-60">
     <p>&copy; 2025 Pizzaria Anjos. Todos os direitos reservados.</p>
 </footer>
 </body>
