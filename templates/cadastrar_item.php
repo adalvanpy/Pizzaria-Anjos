@@ -27,7 +27,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 </head>
 <body class="bg-[#f9f5ed] min-h-screen flex flex-col items-center">
 <header class="w-full bg-[#b22222] text-white p-4 flex items-center justify-start">
-    <a class="text-2xl underline" href="gerenciar_estoque.php?id=<?=$id?>">Voltar</a>
+    <a class="text-2xl ml-8 underline" href="gerenciar_estoque.php?id=<?=$id?>">Voltar</a>
 </header>
     <main class="w-full flex-grow p-8">
         <form class="flex flex-col items-center justify-center w-full" method="post" action="cadastrar_item.php?id=<?=$id?>" enctype="multipart/form-data">
@@ -79,7 +79,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         </form>
 
     </main>
-    <footer class="w-full bg-[#556b2f] text-white text-center p-8">
+    <footer class="w-full bg-[#367588]  text-white text-center p-8">
         <p>&copy; 2025 Pizzaria Anjos. Todos os direitos reservados.</p>
     </footer>
 </body>

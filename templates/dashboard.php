@@ -15,7 +15,8 @@ $usuario = $model->getUsuario($id);
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-[#f9f5ed] min-h-screen flex flex-col items-center">
-<header class="w-full bg-[#b22222] text-white p-4 flex items-center justify-end">
+<header class="w-full bg-[#b22222] text-white p-4 flex items-center justify-between">
+    <span class="bg-[#367588] ml-8 rounded-full px-4 py-2"><?= substr($usuario['nome'], 0, 1) ?></span>
 <div class="flex gap-4">
     <a class="mr-8 text-2xl underline" href="logout.php">Sair</a>
 </div>
@@ -45,7 +46,7 @@ $usuario = $model->getUsuario($id);
     </div>
 
 </main>
-<footer class="w-full bg-[#556b2f] text-white text-center p-8">
+<footer class="w-full bg-[#367588] text-white text-center p-8">
     <p>&copy; 2025 Pizzaria Anjos. Todos os direitos reservados.</p>
 </footer>
 </body>

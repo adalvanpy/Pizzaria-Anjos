@@ -19,12 +19,12 @@ $pag = $consulta->getPagamentos($func['id']);
 <body class="bg-[#f9f5ed] w-full min-h-screen flex flex-col items-center justify-between">
 <header class=" p-4 flex items-center justify-between w-full h-[50%] bg-[#b22222] text-white ">
     <div>
-        <span>Bem vindo <?=$usuario['nome']?></span>
+        <span class="bg-[#367588] ml-8 rounded-full px-4 py-2 mr-8"><?= substr($usuario['nome'], 0, 1) ?></span>
     </div>
     <div class="flex gap-4">
-        <a href="gerenciar_estoque.php?id=<?=$usuario['id']?>">Gerenciar Estoque</a>
-        <a href="gerenciar_pedidos.php?id=<?=$usuario['id']?>">Gerenciar Pedidos</a>
-        <a href="logout.php">Sair</a>
+        <a class="text-2xl underline" href="gerenciar_estoque.php?id=<?=$usuario['id']?>">Gerenciar Estoque</a>
+        <a class="text-2xl underline"  href="gerenciar_pedidos.php?id=<?=$usuario['id']?>">Gerenciar Pedidos</a>
+        <a class="text-2xl underline"  href="logout.php">Sair</a>
     </div>
 </header>
 <main  class=" flex w-[90%] flex-col justify-center items-center">
@@ -65,7 +65,7 @@ $pag = $consulta->getPagamentos($func['id']);
     </table>
 
 </main>
-<footer class="bg-[#556b2f] text-white text-center p-4 w-full py-8 mt-60">
+<footer class="bg-[#367588] text-white text-center p-4 w-full py-8 mt-60">
     <p>&copy; 2025 Pizzaria Anjos. Todos os direitos reservados.</p>
 </footer>
 </body>

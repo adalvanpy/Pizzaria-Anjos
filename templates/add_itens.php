@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body class="bg-[#f9f5ed] min-h-screen flex flex-col items-center">
 <header class="w-full bg-[#b22222] text-white p-4 flex gap-4 items-center justify-start">
-    <span class="ml-8">Seja bem vindo(a) <?=$nome['nome']?></span>
+    <span class="bg-[#367588] ml-8 rounded-full px-4 py-2 mr-8"><?= substr($nome['nome'], 0, 1) ?></span>
 </header>
 <main class="w-full flex-grow p-8">
     <form method="post" action="add_itens.php?id_pedido=<?= $id ?>&user_id=<?=$userId?>" class="w-full">
@@ -87,14 +87,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <div class="flex flex-col items-center w-full">
             <textarea class="w-[50%] h-20 p-2 border rounded mt-4" name="observacao" placeholder="Alguma observação?"></textarea>
-            <button class="w-[50%] border rounded bg-blue-500 mt-4 text-white p-2" type="submit">Adicionar</button>
-            <a href>Cancelar Pedido</a>
+            <div class="flex items-center justify-center w-full h-full gap-4">
+                <button class=" text-center w-60 border rounded bg-blue-500 mt-4 text-white px-4 py-2" type="submit">Adcionar ao pedido</button>
+                <a class="text-center w-60 border rounded bg-red-500 mt-4 text-white px-4 py-2"  href="deletar_pedido.php?id=<?=$id?>&id_user=<?=$nome['id']?>">Cancelar Pedido</a>
+            </div>
         </div>
 
     </form>
 </main>
 
-<footer class="w-full bg-[#556b2f] text-white text-center p-8">
+<footer class="w-full bg-[#367588] text-white text-center p-8">
     <p>&copy; 2025 Pizzaria Anjos. Todos os direitos reservados.</p>
 </footer>
 <script>

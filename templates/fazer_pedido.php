@@ -48,15 +48,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body class="bg-[#f9f5ed] min-h-screen flex flex-col items-center">
 <header class="w-full bg-[#b22222] text-white p-4 flex items-center justify-between">
-    <span class="ml-8">Seja bem bindo(a) <?=$user['nome']?></span>
+    <span class="bg-[#367588] ml-8 rounded-full px-4 py-2 mr-8"><?= substr($user['nome'], 0, 1) ?></span>
     <div class="flex gap-4 mr-8">
-        <a href="meus_pedidos.php?id=<?=$user['id']?>">Meus Pedidos</a>
-        <a href="logout.php">Sair</a>
+        <a class="text-2xl underline" href="meus_pedidos.php?id=<?=$user['id']?>">Meus Pedidos</a>
+        <a class="text-2xl underline" href="logout.php">Sair</a>
     </div>
 </header>
 <main class="w-full flex-grow p-8">
     <form class="w-full flex flex-col items-center justify-center" method="post" action="fazer_pedido.php?id=<?=$id?>">
-        <h2 class="text-3xl text-[#556b2f]">Escolha o seu tipo de entrega</h2>
+        <h2 class="text-3xl text-[#367588]">Escolha o seu tipo de entrega</h2>
         <div class="mt-4">
             <select class="border p-2 w-60 rounded" name="tipo_entrega" id="tipo_entrega">
                 <option  value="Delivery">Delivery</option>
@@ -64,11 +64,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <option value="Consumir no local">Consumir no local</option>
             </select>
             <input type="number" class="hidden" name="frete" value="5.00">
-            <button class="underline text-[#556b2f]" type="submit">Criar Pedido</button>
+            <button class="underline text-[#367588]" type="submit">Criar Pedido</button>
         </div>
     </form>
 </main>
-<footer class="w-full bg-[#556b2f] text-white text-center p-8">
+<footer class="w-full bg-[#367588] text-white text-center p-8">
     <p>&copy; 2025 Pizzaria Anjos. Todos os direitos reservados.</p>
 </footer>
 </body>
