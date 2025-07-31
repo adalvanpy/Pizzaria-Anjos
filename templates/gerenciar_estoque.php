@@ -39,7 +39,7 @@ $itens = $model->getItens();
                     <p class="text-sm"><strong>Borda: </strong><?=$row['borda']?></p>
                     <p class="text-sm"><strong>Tamanho: </strong><?=$row['tamanho']?></p>
                     <p class="mt-1 mb-2 text-sm"><strong>Ingredientes: </strong> <?=$row['ingredientes']?></p>
-                    <a href="editar_item.php?id=<?=$row['id']?>&user_id=<?=$usuario['id']?>" class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded shadow self-start">ATUALIZAR</a>
+                    <a href="editar_item.php?id=<?=$row['id']?>&user_id=<?=$usuario['id']?>" class="mt-auto bg-[#367588] hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded shadow self-start">ATUALIZAR</a>
                 </div>
             <?php endif; ?>
         <?php endforeach; ?>
@@ -54,7 +54,7 @@ $itens = $model->getItens();
               <img src="../fotos/<?=$beb['foto']?>" alt="<?=$beb['nome']?>" class="w-full h-44 object-cover mb-2 rounded">
               <p><strong>Preço R$ </strong><?=$beb['preco']?></p>
               <p><?=$beb['ml']?></p>
-              <a href="editar_item.php?id=<?=$beb['id']?>&user_id=<?=$usuario['id']?>" class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded shadow self-start">ATUALIZAR</a>
+              <a href="editar_item.php?id=<?=$beb['id']?>&user_id=<?=$usuario['id']?>" class="mt-auto bg-[#367588] hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded shadow self-start">ATUALIZAR</a>
           </div>
         <?php endif;?>
         <?php endforeach;?>

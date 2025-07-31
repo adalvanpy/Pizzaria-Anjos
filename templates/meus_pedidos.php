@@ -27,7 +27,7 @@ $pedido = $consulta->getPedidoId($cliente['id']);
     </div>
 </header>
 <main class="w-full flex-grow p-8">
-    <h2 class="text-2xl font-bold">Histórico de pedidos</h2>
+    <h2 class="text-2xl font-bold text-center">Meu histórico de pedidos</h2>
     <table class="table-auto w-full border border-gray-300 text-sm mt-4">
         <thead class="bg-gray-100">
         <tr>

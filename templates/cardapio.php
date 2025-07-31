@@ -30,7 +30,7 @@ $itens = $model->getItens();
                     <p><strong>Preço R$ </strong><?=$row['preco']?></p>
                     <p class="text-sm"><strong>Tamanho: </strong><?=$row['tamanho']?></p>
                     <p class="text-sm"><strong>Borda: </strong><?=$row['borda']?></p>
-                    <p class="mt-1 mb-2 text-sm"><strong>Ingredientes: </strong><?=$row['ingredientes']?></p>
+                    <p class="mb-2 text-sm"><strong>Ingredientes: </strong><?=$row['ingredientes']?></p>
                     <a href="login.php" class="mt-auto bg-[#367588] hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded shadow self-start">PEDIR</a>
                 </div>
             <?php endif; ?>

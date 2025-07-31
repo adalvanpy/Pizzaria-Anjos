@@ -51,7 +51,7 @@ $conexao->close();
 <main class="w-full flex-grow p-8">
     <div class="flex flex-col items-center justify-center w-full h-full">
     <img src="../fotos/pzz.png" class="w-40 h-40 animate-pulse" >
-    <form class="border bg-white/50 flex w-[40%] h-[40%] p-8 flex-col items-center justify-center gap-4 rounded shadow-lg shadow-orange-300"method="post" action="signin.php">
+    <form class="border bg-white/50 flex w-[40%] h-[40%] p-8 flex-col items-center justify-center gap-4 rounded shadow-lg shadow-[#367588]"method="post" action="signin.php">
         <input class="border p-2 w-80 rounded"  type="text" name="nome" placeholder="Seu nome" required>
         <input class="border p-2 w-80 rounded"  type="email" name="email" placeholder="Seu email">
         <input class="border p-2 w-80 rounded"  type="text" name="senha" placeholder="Sua senha">
@@ -67,7 +67,7 @@ $conexao->close();
     <p class="mt-4 ">Ja tem uma conta? <a class="underline text-blue-500" href="login.php">Entre</a></p>
     </div>
 </main>
-<footer class="w-full bg-[#556b2f] text-white text-center p-8">
+<footer class="w-full bg-[#367588] text-white text-center p-8">
     <p>&copy; 2025 Pizzaria Anjos. Todos os direitos reservados.</p>
 </footer>
 </body>

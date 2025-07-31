@@ -77,12 +77,12 @@ $conexao->close();
     </div>
     <h2 class="text-2xl text-[#556b2f] text-center mt-4">Selecione sua forma de pagamento</h2>
     <form class="flex items-center gap-2 justify-center mt-4 flex-col" method="POST" action="pagamento.php?id_pedido=<?=$id_pedido?>&user_id=<?=$id?>">
-        <select class="border w-80 px-4 py-2" name="metodo" id="metodo">
+        <select onchange="exibirTroco()" class="border w-80 px-4 py-2" name="metodo" id="metodo">
             <option value="Pix"> Pix </option>
             <option value="Dinheiro"> Dinheiro </option>
             <option value="Cartão"> Cartão </option>
         </select>
-        <input class="border w-80 px-4 py-2" type="number" name="troco" id="troco" placeholder="Troco">
+        <input class="border w-80 px-4 py-2 hidden" type="number" name="troco" id="troco" placeholder="Troco">
         <div class="flex items-center justify-center gap-4">
             <button class=" rounded bg-blue-500 text-white w-50 px-4 py-2" type="submit">Finalizar Pedido</button>
             <a class="rounded bg-red-500 text-white w-50 px-4 py-2" href="deletar_item_pedido.php?id=<?=$id_pedido?>&id_user=<?=$id?>">Cancelar Pedido</a>
@@ -92,5 +92,16 @@ $conexao->close();
 <footer class="w-full bg-[#367588] text-white text-center p-8">
     <p>&copy; 2025 Pizzaria Anjos. Todos os direitos reservados.</p>
 </footer>
+<script>
+    function exibirTroco(){
+        const valor = document.getElementById('metodo').value;
+        if(valor == 'Dinheiro'){
+            document.getElementById('troco').classList.remove('hidden');
+        }
+        else{
+            document.getElementById('troco').classList.add('hidden');
+        }
+    }
+</script>
 </body>
 </html>

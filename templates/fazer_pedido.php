@@ -57,20 +57,34 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <main class="w-full flex-grow p-8">
     <form class="w-full flex flex-col items-center justify-center" method="post" action="fazer_pedido.php?id=<?=$id?>">
         <h2 class="text-3xl text-[#367588]">Escolha o seu tipo de entrega</h2>
-        <div class="mt-4">
-            <select class="border p-2 w-60 rounded" name="tipo_entrega" id="tipo_entrega">
+        <div class="mt-4 flex flex-col gap-4">
+            <select onchange="exibirFrete()" class="border p-2 w-60 rounded" name="tipo_entrega" id="tipo_entrega">
                 <option  value="Delivery">Delivery</option>
-                <option value="Retirar no local">Retirar no local</option>
+                <option value="Retirar no local" selected>Retirar no local</option>
                 <option value="Consumir no local">Consumir no local</option>
             </select>
-            <input type="number" class="hidden" name="frete" value="5.00">
-            <button class="underline text-[#367588]" type="submit">Criar Pedido</button>
+            <div class="hidden flex items-center justify-center gap-2" id="frete" >
+                <label for="frete">Frete</label>
+                <input class="px-4 py-2 w-20 rounded" type="number"  name="frete" value="5.00" readonly>
+            </div>
+            <button class="w-50 px-4 py-2 text-white bg-[#367588]" type="submit">Criar Pedido</button>
         </div>
     </form>
 </main>
 <footer class="w-full bg-[#367588] text-white text-center p-8">
     <p>&copy; 2025 Pizzaria Anjos. Todos os direitos reservados.</p>
 </footer>
+<script>
+    function exibirFrete(){
+        const valor = document.getElementById('tipo_entrega').value;
+        if(valor == 'Delivery'){
+            document.getElementById('frete').classList.remove('hidden');
+        }
+        else{
+            document.getElementById('frete').classList.add('hidden');
+        }
+    }
+</script>
 </body>
 </html>
 

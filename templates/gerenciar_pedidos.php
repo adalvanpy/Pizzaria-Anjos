@@ -35,7 +35,9 @@ $pedido = $consulta->getPedidosForGerencia($func['id']);
             <th class="border px-4 py-2">Id</th>
             <th class="border px-4 py-2">Status</th>
             <th class="border px-4 py-2">Entrega</th>
+            <th class="border px-4 py-2">Endereço</th>
             <th class="border px-4 py-2">Frete</th>
+            <th class="border px-4 py-2">Hora</th>
             <th class="border px-4 py-2">Total</th>
             <th class="border px-4 py-2">Ações</th>
         </tr>
@@ -43,12 +45,14 @@ $pedido = $consulta->getPedidosForGerencia($func['id']);
         <tbody>
         <?php foreach ($pedido as $ped):?>
             <tr class="hover:bg-gray-50">
-                <td class="border px-4 py-2"><?=$ped['id']?></td>
-                <td class="border px-4 py-2"><?=$ped['status']?></td>
-                <td class="border px-4 py-2"><?=$ped['tipo_entrega']?></td>
-                <td class="border px-4 py-2"><?=$ped['frete']?></td>
-                <td class="border px-4 py-2"><?=$ped['total']?></td>
-                <td class="border px-4 py-2 max-w-[50px]">
+                <td class="border text-center px-4 py-2"><?=$ped['id']?></td>
+                <td class="border text-center px-4 py-2"><?=$ped['status']?></td>
+                <td class="border text-center px-4 py-2"><?=$ped['tipo_entrega']?></td>
+                <td class="border text-center px-4 py-2"><?=$ped['endereco_entrega']?></td>
+                <td class="border text-center px-4 py-2"><?=$ped['frete']?></td>
+                <td class="border text-center px-4 py-2"><?=$ped['hora']?></td>
+                <td class="border text-center px-4 py-2"><?=$ped['total']?></td>
+                <td class="border px-4 py-2 w-60">
                     <a class="underline text-blue-500" href="atualizar_status.php?id=<?=$ped['id']?>&userId=<?=$usuario['id']?>">Atualizar Status</a>
                     <button class="underline ml-2 text-blue-500" onclick="exibir('itens<?=$ped['id']?>')">Exibir itens</button>
                 </td>

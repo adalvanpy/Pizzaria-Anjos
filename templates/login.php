@@ -45,7 +45,7 @@ $conexao->close();
 </header>
 <main class="flex w-[90%] flex-col justify-center items-center">
     <img src="../fotos/pzz.png" class="w-40 h-40 animate-pulse" >
-    <form class=" mt-4 border bg-white/50 flex w-[40%] h-[40%] p-8 flex-col items-center justify-center gap-4 rounded shadow shadow-[#556b2f]" method="post" action="login.php">
+    <form class=" mt-4 border bg-white/50 flex w-[40%] h-[40%] p-8 flex-col items-center justify-center gap-4 rounded shadow-lg shadow-[#367588]" method="post" action="login.php">
         <input class="border p-2 w-80" type="email" name="email" placeholder="Seu email">
         <input class="border p-2 w-80"  type="password" name="senha" placeholder="Sua senha">
         <button class="border bg-[#367588] text-white w-80 p-2" type="submit">Entrar</button>
